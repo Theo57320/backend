@@ -1,17 +1,13 @@
 <template>
-  <div class="Users">
+  <div class="Bienvenue">
     <b-navbar class="is-light">
       <template #brand > 
-        <b-navbar-item >
+        <b-navbar-item>
             <img
                 src="https://etapes.com/app/uploads/2016/05/1464094938.png"
                 alt="Atelier2"
             >
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ path: '/ancienusers' }">
-          AncienUtilisateur
-        </b-navbar-item>
-
       </template>
       <template #end >
         <b-navbar-item tag="div">
@@ -21,20 +17,28 @@
         </b-navbar-item>
       </template>
     </b-navbar>
-    <div v-for="user in users" :key="user.id" >
-        <p>
-        {{user.prenom}}
-       {{user.nom}}
-      </p>
-      {{user.mail}}
-         <button @click="deleteUser(conv.id, conv.label)" class="delete is-medium is-vcentered suppButton" id="DeleteUser"></button>
+    <div class="liste">
+        <b-navbar-item class="box" id="boxusers" tag="router-link" :to="{ path: '/totalusers' } ">
+          <p>Liste des Utilisateurs</p>
+          <!-- <img alt="Vue logo" src="../assets/users-group.png" id="imgusers"> -->
+        </b-navbar-item>
+       <b-navbar-item class="box" id="boxancienusers" tag="router-link" :to="{ path: '/ancienusers' }">
+          <p>Liste des Anciens Utilisateurs</p>
+        </b-navbar-item>
+        <b-navbar-item class="box" id="listeevents" tag="router-link" :to="{ path: '/events' }">
+          <p>Liste des évents</p>
+        </b-navbar-item>
+        <b-navbar-item class="box" id="ancienevents" tag="router-link" :to="{ path: '/ancienevents' }">
+          <p>Liste des Anciens Events</p>
+        </b-navbar-item>
     </div>
+    
   </div>
   
 </template>
 <script>
 
-import axios from 'axios';
+
 export default {
   name: "Users",
   components: {},
@@ -48,41 +52,9 @@ export default {
     deconnexion(){
       this.$store.state.token = null;
       this.$router.push("/");
-    },
-   
-    chargementusers(){
-       axios.get(`http://149.91.80.75:19380/users`)
-     .then((response) => this.users= response.data)},
-
-     AncienUsers(){
-      this.$store.state.token = null;
-      this.$router.push("/ancienusers");
-
-    },
-    deleteUser(){
-      axios.get(`http://149.91.80.75:19380/users`)
-      this.users.dialog.confirm({
-  
-        type: 'is-danger',
-        cancelText: 'Annuler',
-        confirmText: 'Accepter',
-        message: `Supprimer l'utilisateur <strong>${label}</strong> ?`,
-        onConfirm: () => {
-          this.users.delete().then(response => {
-            
-            this.$buefy.toast.open('Conversation supprimée')
-            this.users.get().then(response => {
-              this.users = response.data 
-            })
-          })
-        }
-      })
-    }
-     
+    },     
   },
 
-  
-  
   created(){
     this.chargementusers();
   },
@@ -93,17 +65,49 @@ export default {
 
 <style lang="scss">
 
-.title{
-  color:#48C78E;
-}
+.liste{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 
-#AncienUsers{
-  margin-top: 7px;
 }
+#boxusers{
+  margin-left: 8%;
+  width: 40%;
+  height: 250px;
+  margin-top: 4%;
+  p{
+width: 100%;
+  }
+};
+#boxancienusers{
+margin-left: 5%;
+ width: 40%;
+height: 250px;
+margin-top: 4%;
+ p{
+width: 100%;
+  }
+};
+#listeevents{
+  margin-left: 8%;
+  width: 40%;
+  height: 250px;
+   p{
+width: 100%;
+  }
+};
+#ancienevents{
+  margin-left: 5%;
+ width: 40%;
+ height: 250px;
+  p{
+width: 100%;
+  }
 
-#DeleteUser{
-  margin-left: 70px;
- margin-bottom: 20px
-}
+};
+
+
+
 
 </style>

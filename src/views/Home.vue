@@ -58,7 +58,11 @@ export default {
           this.$router.push("/home");
           // this.error = "success to connect";
         })
-     .then((response) => console.log (response));},
+     .then((response) => console.log (response)
+).catch((error) => {
+          this.$store.commit("setToken", null),
+            (this.error = error.response.data.message);
+        });;},
     deconnexion(){
       this.$store.state.token = null;
       this.$router.push("/");
@@ -83,4 +87,5 @@ export default {
   background-color: white;
   color: black;
 }
+
 </style>
