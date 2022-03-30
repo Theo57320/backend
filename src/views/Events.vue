@@ -10,6 +10,7 @@
         </b-navbar-item>
 
       </template>
+
       <template #end>
         <b-navbar-item tag="div">
           <div>
